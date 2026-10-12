@@ -1,0 +1,25 @@
+# Secrets: never commit the real environment file
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Node / Vite
+node_modules/
+frontend/dist/
+frontend/.env
+
+# Temp files from atomic audit writes
+*.json.tmp
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# NOTE: data/campus_customs.db and data/campus_customs_new.db are intentionally committed.

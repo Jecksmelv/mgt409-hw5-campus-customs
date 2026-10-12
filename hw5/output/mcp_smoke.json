@@ -1,0 +1,106 @@
+{
+  "description": "Smoke test of the Campus Customs MCP server, called through Claude Code via the project .mcp.json.",
+  "mcp_server": {
+    "name": "campus-customs",
+    "config": ".mcp.json",
+    "entrypoint": "mcp_server/server.py",
+    "database": "data/campus_customs_new.db"
+  },
+  "tested_on": "2026-10-11",
+  "source": "Outputs copied from the raw tool results of a Claude Code session opened in the HW 5 folder. Each was then checked against data/campus_customs_new.db with independent SQL (db_check).",
+  "all_tests_passed": true,
+  "tests": [
+    {
+      "ticket": 101,
+      "prompt": "Use the campus-customs MCP tool check_stock to check whether we have 1 CC-TEE-WHITE in size S for ticket 101.",
+      "mcp_tool": "mcp__campus-customs__check_stock",
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty_needed": 1
+      },
+      "called_at": "2026-10-11T23:46:55Z",
+      "output_short": {
+        "name": "Classic Bulldog Tee",
+        "size": "S",
+        "location": "Aisle B",
+        "qty_on_hand": 0,
+        "qty_needed": 1,
+        "can_fill_from_stock": false,
+        "shortage": 1
+      },
+      "db_check": {
+        "sql": "SELECT name, qty, location FROM inventory WHERE sku='CC-TEE-WHITE' AND size='S'",
+        "db_values": {
+          "name": "Classic Bulldog Tee",
+          "qty": 0,
+          "location": "Aisle B"
+        },
+        "match": true
+      }
+    },
+    {
+      "ticket": 102,
+      "prompt": "Use the campus-customs MCP tool get_rent_status to look up lease 1 for ticket 102.",
+      "mcp_tool": "mcp__campus-customs__get_rent_status",
+      "arguments": {
+        "lease_id": 1
+      },
+      "called_at": "2026-10-11T23:47:27Z",
+      "output_short": {
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400,
+        "next_due": "2026-09-02",
+        "shop_today": "2026-08-31",
+        "days_until_due": 2,
+        "is_overdue": false,
+        "cash_covers_rent": true,
+        "checking_balance": 3400
+      },
+      "db_check": {
+        "sql": "SELECT space_name, landlord, monthly_rent, next_due FROM leases WHERE id=1; SELECT date_today FROM desk; SELECT balance, date FROM cash_accounts",
+        "db_values": {
+          "space_name": "Chapel Street shop",
+          "landlord": "Elm City Properties",
+          "monthly_rent": 2400.0,
+          "next_due": "2026-09-02",
+          "desk_date_today": "2026-08-31",
+          "checking_balance": 3400.0,
+          "checking_date": "2026-08-31"
+        },
+        "match": true
+      }
+    },
+    {
+      "ticket": 103,
+      "prompt": "Use the campus-customs MCP tool quote_bulk_order to price 20 CC-HOOD-NAVY hoodies at a 15% discount for ticket 103.",
+      "mcp_tool": "mcp__campus-customs__quote_bulk_order",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "qty": 20,
+        "discount_pct": 15
+      },
+      "called_at": "2026-10-11T23:47:50Z",
+      "output_short": {
+        "unit_cost": 22,
+        "list_price": 58,
+        "discounted_unit_price": 49.3,
+        "discounted_unit_margin": 27.3,
+        "order_revenue": 986,
+        "order_cost": 440,
+        "order_margin": 546,
+        "break_even_discount_pct": 62.1,
+        "below_cost": false
+      },
+      "db_check": {
+        "sql": "SELECT unit_cost, list_price FROM pricing WHERE sku='CC-HOOD-NAVY'",
+        "db_values": {
+          "unit_cost": 22.0,
+          "list_price": 58.0
+        },
+        "match": true
+      }
+    }
+  ]
+}

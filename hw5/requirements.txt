@@ -1,0 +1,16 @@
+# Python dependencies for the whole project: MCP server, agent team and FastAPI backend.
+# Install into a virtual environment named .venv in this folder:
+#   python -m venv .venv
+#   .venv\Scripts\python -m pip install -r requirements.txt      (Windows)
+#   .venv/bin/python -m pip install -r requirements.txt          (macOS / Linux)
+
+# MCP server (mcp_server/server.py)
+fastmcp==4.1.0
+
+# Multi-agent team (backend/agents.py): PydanticAI with the OpenAI client (used through Portkey) and MCP support
+pydantic-ai-slim[openai,mcp]==2.55.0
+python-dotenv==1.2.4
+
+# FastAPI backend (backend/main.py)
+fastapi==0.143.0
+uvicorn[standard]==0.54.0

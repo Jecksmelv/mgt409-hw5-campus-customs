@@ -1,0 +1,101 @@
+{
+  "run": "Problem 9 full run",
+  "model": "gpt-6-luna",
+  "database": "data/campus_customs_new.db (reset from data/campus_customs.db before the run)",
+  "starting_checking_balance": 3400.0,
+  "ending_checking_balance": 152.0,
+  "tickets": [
+    {
+      "ticket_id": 101,
+      "subject": "Bulldog tee: 1 \u00d7 CC-TEE-WHITE size S for Tauhid Zaman",
+      "final_status": "resolved",
+      "outcome": "Size S was out of stock and the only apparel vendor was blocked by overdue invoice 501. The $840 invoice was paid after human approval, then a 1-tee purchase order ($8) was approved and paid. The tee is due about 2026-09-05. A customer update is drafted (unsent).",
+      "agent_runs": [
+        "f7ec2eba4e51",
+        "e57fe02b0692",
+        "5ef595ac39ab"
+      ],
+      "agents": {
+        "boss": "Routed Inventory first, then Accounting, then Customer Service. Checked cash across the board, made the final call, and recorded it with update_ticket.",
+        "inventory": "Found 0 of 1 on hand (short 1). Matched the item to Bulldog Print Co (5 lead days). Flagged can_ship=false while invoice 501 was open, and later confirmed can_ship=true after it was paid.",
+        "accounting": "Queued invoice 501 ($840) for approval and did not order from the blocked vendor. After the payment, confirmed it was executed and queued a purchase order for exactly 1 tee at the $8.00 unit cost.",
+        "customer_service": "Saved drafts #1\u2013#3 to Tauhid saying size S is being restocked, with no firm date and no internal details. Nothing was sent.",
+        "facilities": "Not called (no lease or space issue)."
+      },
+      "human_approvals": [
+        {
+          "approval_id": 1,
+          "kind": "invoice",
+          "amount": 840.0,
+          "requested_by": "accounting",
+          "decision": "approved",
+          "approved_by": "Melvin",
+          "decided_at": "2026-10-12T00:59:46+00:00",
+          "payment_id": 1,
+          "executed_through": "POST /api/approvals/{id}/approve (dashboard Approve \u2192 Confirm)"
+        },
+        {
+          "approval_id": 2,
+          "kind": "purchase_order",
+          "amount": 8.0,
+          "requested_by": "accounting",
+          "decision": "approved",
+          "approved_by": "Melvin",
+          "decided_at": "2026-10-12T01:03:53+00:00",
+          "payment_id": 2,
+          "executed_through": "POST /api/approvals/{id}/approve (dashboard Approve \u2192 Confirm)"
+        }
+      ],
+      "cash_change": -848.0,
+      "notes": "Run 2 skipped the purchase order. The Boss and Accounting prompts were clarified, and run 3 placed it."
+    },
+    {
+      "ticket_id": 102,
+      "subject": "Rent notice from Elm City Properties, lease 1",
+      "final_status": "resolved",
+      "outcome": "Confirmed that $2,400 rent was due 2026-09-02 (2 days after desk.date_today, not overdue). The payment was queued, approved by a human and paid. The lease's next_due moved to 2026-10-02.",
+      "agent_runs": [
+        "b81baa9d4201"
+      ],
+      "agents": {
+        "boss": "Routed the notice to Facilities, checked cash ($2,552, leaving $152), and recorded the final call.",
+        "facilities": "Checked the ticket's claim against lease 1 with get_rent_status and handed the payment to Accounting.",
+        "accounting": "Checked cash and queued the $2,400 rent payment (amount taken from leases.monthly_rent) for approval.",
+        "inventory": "Not called.",
+        "customer_service": "Not called (the requester is the landlord)."
+      },
+      "human_approvals": [
+        {
+          "approval_id": 3,
+          "kind": "rent",
+          "amount": 2400.0,
+          "requested_by": "accounting",
+          "decision": "approved",
+          "approved_by": "Melvin",
+          "decided_at": "2026-10-12T01:05:14+00:00",
+          "payment_id": 3,
+          "executed_through": "POST /api/approvals/{id}/approve (dashboard Approve \u2192 Confirm)"
+        }
+      ],
+      "cash_change": -2400.0
+    },
+    {
+      "ticket_id": 103,
+      "subject": "Bulk hoodie discount: 20 \u00d7 CC-HOOD-NAVY size M for Yale AI Club",
+      "final_status": "resolved",
+      "outcome": "Offered 10% off ($52.20 each; 57.9% margin; $604 margin on 20) with the 8 in-stock hoodies now. The 12-unit restock ($264) was declined because only $152 cash remained. An offer is drafted (unsent). No money moved.",
+      "agent_runs": [
+        "23182ab2cc8c"
+      ],
+      "agents": {
+        "boss": "Routed Inventory, then Accounting. Chose the 10% discount and the partial fill. Deferred the restock for lack of cash, and briefed Customer Service.",
+        "inventory": "Found 8 of 20 on hand (short 12). Confirmed Bulldog Print Co could ship (5 lead days, arriving 2026-09-05 if ordered).",
+        "accounting": "Priced 10%, 15% and 20% off with quote_bulk_order. Found the $264 restock exceeded the $152 cash ($112 short), so it created no purchase order.",
+        "customer_service": "Saved draft #4 to Yale AI Club with the $52.20 offer, 8 available now, and a question about split fulfillment. Nothing was sent.",
+        "facilities": "Not called."
+      },
+      "human_approvals": [],
+      "cash_change": 0.0
+    }
+  ]
+}
