@@ -499,3 +499,46 @@ This is a running log of the prompts I gave my AI coding assistant, added as I w
 > Tie the reflection back to the actual app and the real tickets throughout. Use ticket IDs, agent names, tools, approvals and cash outcomes where relevant. Avoid generic statements about the benefits of multi-agent AI that could have been written without running this project.
 >
 > Keep the writing in my natural style: sharp, curious, analytical, and conversational. I tend to notice both the operational logic and the little things that make a system feel smart or clunky. Avoid corporate filler, generic AI language, and overly polished prose. No em dashes.
+
+---
+
+## Problem 11 — Submit to GitHub
+
+**Prompt:**
+
+> I'm now on Problem 11: Submit to GitHub.
+>
+> This is the final packaging step, so I want you to audit the project carefully before pushing anything. The file structure matters because graders need to clone it and quickly find the required files.
+>
+> The project should be organized as hw5/ and include at least this required structure: (AI_prompts.md, requirements.txt, .env.example, .gitignore, .mcp.json, README.md, data/campus_customs.db, data/campus_customs_new.db, mcp_server/server.py, mcp_server/README.md, frontend/, backend/main.py, backend/models.py, backend/prompts/boss.md, inventory.md, accounting.md, facilities.md, customer_service.md, output/harness.md, mcp_smoke.json, desk_tickets.html, design.md, resolved_tickets.json, resolved_board.html, audit_trail.json, github_url.txt)
+>
+> Do a final check against this structure and fix any missing, misplaced or incorrectly named required files before pushing.
+>
+> The real .env must NOT be committed or pushed. Make sure .gitignore protects it.
+>
+> Include: .env.example with placeholders showing the environment variables needed to run the project, including PORTKEY_API_KEY and any required model configuration, but do not put any real secrets in it.
+>
+> Both database files must be included under data/. Unlike an earlier assignment where the data pack could stay outside the submission, this assignment specifically needs both: data/campus_customs.db and data/campus_customs_new.db
+>
+> Make sure requirements.txt includes what is actually needed for the Python side of the project.
+>
+> The top-level README.md should clearly explain how someone cloning the repo can run the full system, including:
+> - how to restore or copy the original database to the working database for a clean run
+> - how to start the MCP server
+> - how to start the FastAPI backend
+> - how to start the React dashboard
+> - that the database should be reset before doing a clean full three-ticket run
+>
+> Also check that the frontend has its own normal package files needed to run with npm.
+>
+> Before publishing, scan the project for my real PORTKEY_API_KEY, .env contents or any other secret and make sure none will be committed.
+>
+> Then create or use a public GitHub repository, commit the completed hw5 project and push it so the graders can clone it.
+>
+> Once the public repository is live, save its actual URL to: output/github_url.txt
+>
+> Do not put a placeholder URL there. Verify that the repository is public and that the URL works.
+>
+> Do one final check that all required output files are present, neither database is missing, the five prompt files are there, and no secrets are in the repository before finishing.
+
+(The assignment also showed the expected file tree as a screenshot; the structure list above is that tree.)
